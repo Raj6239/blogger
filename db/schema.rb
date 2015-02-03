@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150202114548) do
+ActiveRecord::Schema.define(version: 20150203053124) do
 
   create_table "articles", force: :cascade do |t|
     t.string   "title",      limit: 255
@@ -26,6 +26,19 @@ ActiveRecord::Schema.define(version: 20150202114548) do
     t.integer  "article_id",  limit: 4
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+  end
+
+  create_table "taggings", force: :cascade do |t|
+    t.integer  "tag_id",     limit: 4
+    t.integer  "article_id", limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
 end

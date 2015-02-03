@@ -18,11 +18,15 @@ class ArticlesController < ApplicationController
 	def new
 		@article= Article.new
 	end
+
+	
    
 	def update
-  		@article = Article.find(params[:id])
-  		@article.update(article_params)
 
+  		@article = Article.find(params[:id])
+
+  		@article.update(article_params)
+	
   		 flash.notice = "Your Article '#{@article.title}' Updated!"
 
   			redirect_to article_path(@article)

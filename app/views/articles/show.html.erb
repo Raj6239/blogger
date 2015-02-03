@@ -1,5 +1,10 @@
 <h1><%= @article.title %></h1>
-
+<p>
+  Tags:
+  <% @article.tags.each do |tag| %>
+    <%= link_to tag.name, tag_path(tag) %>
+  <% end %>
+</p>
 
 <p><%= @article.body %></p>
 
@@ -7,7 +12,7 @@
 <%= link_to "delete", article_path(@article),method: :delete,data: {confirm: "Really delete the article?"} %></br>
 
 <h3>Comments (<%= @article.comments.size %>)</h3>
-     <% @article.comments.each_with_index do |comment|%>
+     <% @article.comments.each do |comment|%>
           <h4><%= comment.author_name%></h4>
           <li><%= comment.body %><p>Posted <%= distance_of_time_in_words(Time.now, comment.created_at) %> ago</p>
 </br></li>

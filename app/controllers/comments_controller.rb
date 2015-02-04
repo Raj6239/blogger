@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+
+	before_filter :authenticate_user!, except: [:destroy]
 	def create
 		@comment= Comment.new(comment_params)
 		@comment.article_id= params[:article_id]

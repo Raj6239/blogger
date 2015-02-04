@@ -1,5 +1,7 @@
 class TagsController < ApplicationController
 
+	before_filter :authenticate_user!, only: [:destroy, :edit]
+
 	def edit
 		@tag= Tag.find(params[:id])
 	end

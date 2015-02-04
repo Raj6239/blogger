@@ -14,8 +14,8 @@ class Article < ActiveRecord::Base
 	def tag_list
 		 self.tags.collect do |tag|
     		tag.name
-		 tags.join(", ")
-		end
+		 
+		end.join(",")
 	end
       
 	def tag_list=(tags_string)

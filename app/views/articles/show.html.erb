@@ -6,7 +6,16 @@
   <% end %>
 </p>
 
+<p><%= image_tag @article.photo.url(:small) %></p>
+
 <p><%= @article.body %></p>
+
+<% @article.attachments.each do |j| %>
+  <%= image_tag j.image(:thumb) %>
+
+<% end %>
+
+
 
 <%= link_to "edit", edit_article_path(@article) %>
 <%= link_to "delete", article_path(@article),method: :delete,data: {confirm: "Really delete the article?"} %></br>

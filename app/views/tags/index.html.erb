@@ -2,7 +2,7 @@
 
 <ul>
   <% @tags.each do |tag| %>
-    <%= tag.name %>
+    <%= tag.name %>&nbsp;&nbsp;&nbsp;
     <%= link_to 'edit', edit_tag_path(tag)%>
     <%= link_to 'delete', tag_path(tag) ,method: :delete,data: {confirm: "Really want to delete the tag?"}%></br>
   <% end %>

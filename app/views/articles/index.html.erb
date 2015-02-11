@@ -1,12 +1,23 @@
-<h1>Listing Artcles</h1>
 
+
+<h1>Listing Artcles</h1>
 
 <ul id="articles">
   <% @articles.each do |article| %>
     
-    <li><%= link_to article.title, article_path(article)%></li>
-      <%= link_to 'delete', article_path(article) ,method: :delete,data: {confirm: "Really want to delete the article?"}%></br>
-  	<% end %>
- </ul>
+   <li><%= link_to article.title, article_path(article)%></li>
+     
+     <%if user_signed_in? && current_user.account_status==true %>
+         <% if  (current_user.role == "admin"||current_user.role == "superadmin")%>
+           <%= link_to 'delete', article_path(article) ,method: :delete,data: {confirm: "Really want to delete the article?"}%></br>
+        <% end %>
+      
+     <%end%>
+      
+  <% end %>
 
+ </ul>
+<%if user_signed_in? && current_user.account_status == true %>
  <%= link_to "Create a New article", new_article_path, :class => 'new_article'%>
+<% end%>
+ 

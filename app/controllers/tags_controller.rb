@@ -7,14 +7,19 @@ class TagsController < ApplicationController
 	end
 
 	def show
-
+       # @article = Article.find(params[:id])
 		@tag= Tag.find(params[:id])
+		if params[:tag]
+
+	else
+		@article = Article.find(params[:article_id])
+	end
+		# @art= Article.find(params[:art_id])
 		
 	end
 
 	def index
 		@tags= Tag.all
-		
 	end
 
 	def update

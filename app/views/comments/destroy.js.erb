@@ -1,0 +1,3 @@
+<%# debugger %>
+$("#comment_count").html("comments(<%= (@article.comments.count)%>)");
+ $(".comments").html("<%= escape_javascript(render(:partial => 'articles/comment')) %>");

@@ -5,9 +5,15 @@ class Article < ActiveRecord::Base
 
 	has_many :tags, through: :taggings
 
+	belongs_to :user
+
 	has_many :attachments
 
-	has_attached_file :photo, :styles => { :small => "500x300#"}
+	validates :title, :presence => { :message => "title can't be blank" }
+	validates :body, :presence =>{ :message => "body can't be blank" }
+
+	has_attached_file :photo, :styles => { :small => "500x300#"},
+	:default_url => "android1.jpeg"
 	validates_attachment_content_type :photo, :content_type => ["image/jpg", "image/jpeg", "image/png"]
 
 

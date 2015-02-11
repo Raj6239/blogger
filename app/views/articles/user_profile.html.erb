@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+	.margin{margin: 20px;}
+	.margin_left{margin-left: 200px;}
+	.remove{color: red;}
+
+	</style>
+</head>
+<body>
+
+
+
+<h1>your Profile</h1>
+<div class="row margin">
+	<div class="col-md-3"><h3>Account Status:-</h3></div>
+	
+	<% if @user.account_status== true%>
+	<div class="col-md-3"><p style="color: blue">Activated</div>
+
+     <div class="col-md-3"><p><%= link_to 'Deactivate your Account', deactivate_account_path(@user.id),:class=>'remove'%></div>       
+
+	<% else %>
+	<div class="col-md-3"><p style="color: red">Dectivated</p></div>
+	<div class="col-md-3"><p><%= link_to 'Activate your Account', deactivate_account_path(@user.id)%></div>
+	<%end%>
+</div>
+<div class="row margin">
+	<div class="col-md-3"><h3>User ID:-</h3></div>
+	<div class="col-md-3"><%= @user.id%></div>
+</div>
+<div class="row margin">
+	<div class="col-md-3"><h3>Email:-</h3></div>
+	<div class="col-md-3"><%= @user.email%></div>
+</div>
+<div class="row margin">
+	<div class="col-md-3"><h3>Your Role:-</h3></div>
+	<div class="col-md-3"><%= @user.role%></div>
+</div>
+<div class="row margin_left">
+	<h3><%= link_to 'Remove Account', delete_account_path(@user.id),method: :delete,data: {confirm: "Are you sure to remove your account"},:class=>'remove'%></h3>
+</div>
+
+<%= link_to "<< Back", articles_path %>
+</body>
+</html>

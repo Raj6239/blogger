@@ -1,0 +1,26 @@
+
+<% @article.comments.each do |comment| %>
+ 
+    <% if !comment.user.nil? %>
+      <h4><%= comment.user.email %></h4>
+    <% else %>
+      <h4> User doesn't exist</h4>
+    <% end %>
+      <div style="word-break: break-word" id="comment"><%= comment.body %><p>Posted <%= distance_of_time_in_words(Time.now, comment.created_at) %> ago</p></div>
+        
+     <div class="edit_comment_<%=comment.id%>">    
+     <% if  user_signed_in? && (comment.user_id == current_user.id)%>  
+          <%= link_to 'edit comment', edit_article_comment_path(:article_id=>@article.id,:id=>comment.id), :remote=> true%>|
+          
+         <% end %>
+    
+         <% if user_signed_in? && 
+            ((!@article.user.nil? && current_user.email == @article.user.email) || (comment.user_id == current_user.id) || (current_user.role =="admin"|| current_user.role =="superadmin") )
+         %>
+
+        <%= link_to 'delete comment', article_comment_path(:id=>comment.id,:article_id=>@article.id),:remote=> true, method: :delete,data: {confirm: "Really want to delete the comment?"}%>
+         <% end %>
+      </div>      
+     
+    
+  <% end %>

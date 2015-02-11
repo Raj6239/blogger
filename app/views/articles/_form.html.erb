@@ -1,4 +1,5 @@
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <%= form_for(@article, html:{multipart: true})  do |f| %>
   <ul>
   <% @article.errors.full_messages.each do |error| %>
@@ -13,10 +14,10 @@
     <%= f.label :body %><br />
     <%= f.text_area :body %>
   </p>
-   
+     <%= f.hidden_field :user_id, :value => current_user.id %>
    <p>
      <% if @article.photo.exists? %>
-      <%= image_tag @article.photo.url %><br/>
+      <%= image_tag @article.photo.url(:small),:alt=>"No image selected" %><br/>
   <% end %>
     <%=f.label :photo, "Attach an Image" %><br />
     <%= f.file_field :photo %>
@@ -28,9 +29,9 @@
   <%= f.label :tag_list %><br />
   <%= f.text_field :tag_list %>
 </p>
-
-
   <p>
     <%= f.submit %>
   </p>
 <% end %>
+
+<%= link_to 'Back', articles_path%>

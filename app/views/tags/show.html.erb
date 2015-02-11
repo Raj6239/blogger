@@ -5,3 +5,8 @@
     <li><%= link_to article.title, article_path(article) %></li>
   <% end %>
 </ul>
+<% if params[:tag] %>
+<%= link_to "<< Back to tags", tags_path %>
+<% else %>
+<%= link_to "<< Back", article_path(@article) %>
+<% end %>

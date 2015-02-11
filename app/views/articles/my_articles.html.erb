@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+	<style type="text/css">
+      .back{margin: 50px;}
+	</style>
+</head>
+<body>
+
+<h1>Listing Artcles</h1>
+
+<ul id="articles">
+  
+
+<% if @user.articles.size == 0%>
+
+    <h4> you havn't any article yet.</h4>
+<% else %>
+
+  <% @user.articles.each do |article| %>
+    
+   <li><%= link_to article.title, article_path(article)%></li>
+     
+         <%# if user_signed_in? && (current_user.email == "kraj6239@gmail.com")%>
+            <%= link_to "edit", edit_article_path(article) %>|
+           <%= link_to 'delete', article_path(article) ,method: :delete,data: {confirm: "Really want to delete the article?"}%>
+         </br>
+        <%# end %>
+    <% end %>
+<% end %>
+ 
+
+  <div class="back"><%= link_to "<< Back", articles_path %></div>
+ </ul>
+
+ <%= link_to "Create a New article", new_article_path, :class => 'new_article'%>
+
+
+ </body>
+</html>

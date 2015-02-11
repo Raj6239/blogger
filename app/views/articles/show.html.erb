@@ -1,31 +1,139 @@
+
+
+<% if user_signed_in? && current_user.account_status== false%>
+<%# if user have account but currently ,he/she not active.%>
+
+  <!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+    <style type="text/css">
+     .gly{height: 30px; width: 30px;}
+     .comment_div{width: 500px;}
+
+     .back{margin: 50px; margin-top: 50px;}
+     
+     
+
+    </style>
+
+</head>
+<body>
+
+
 <h1><%= @article.title %></h1>
-<p>
-  Tags:
-  <% @article.tags.each do |tag| %>
-    <%= link_to tag.name, tag_path(tag) %>
-  <% end %>
-</p>
+  <p>
+    Tags:
+    
+    <% @article.tags.each do |tag| %>
 
-<p><%= image_tag @article.photo.url(:small) %></p>
+      <%= link_to tag.name, tag_path(:id => tag, :article_id => @article.id) %>
+    <% end %>
+  </p>
 
-<p><%= @article.body %></p>
-<%= link_to "edit", edit_article_path(@article) %>
-<%= link_to "delete", article_path(@article),method: :delete,data: {confirm: "Really delete the article?"} %></br>
+<div><%= image_tag @article.photo.url(:small) %></div>
+<div><%= @article.body %></div>
+
 <% @article.attachments.each do |j| %>
-  <%= image_tag j.image(:thumb) %>
- <span class="glyphicons glyphicons-remove-2"></span>
+    <%= image_tag j.image(:thumb) %>
+    
 <% end %>
 
+<% if @article.comments.size == 0 %>
+       <h3>No Comments here</h3>
+<% else %>
+      <h3>Comments (<%= @article.comments.size %>)</h3>
+
+  <% @article.comments.each do |comment|%>
+    
+      <% if !comment.user.nil? %>
+      <h4><%= comment.user.email %></h4>
+    <% else %>
+      <h4> User doesn't exist</h4>
+    <% end %>
+      <div style="word-break: break-word"><%= comment.body %><p>Posted <%= distance_of_time_in_words(Time.now, comment.created_at) %> ago</p></div>
+         
+     
+  <% end %>
+<%end%>
+
+ <%#= render partial: 'comments/form' %>
+
+<%= link_to "<< Back", articles_path, :class=>'back' %>
+</body>
+</html>
 
 
 
 
-<h3>Comments (<%= @article.comments.size %>)</h3>
-     <% @article.comments.each do |comment|%>
-          <h4><%= comment.author_name%></h4>
-          <li><%= comment.body %><p>Posted <%= distance_of_time_in_words(Time.now, comment.created_at) %> ago</p></br></li>
-          <%#= link_to 'edit' edit_comment_path(comment)%>
-          <%#= link_to 'delete' destroy_comment_path(comment)%>
+
+
+<% else %>
+<%# it is for users, who have active account, as well as for normal user.%>
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+    <style type="text/css">
+     .gly{height: 30px; width: 30px;}
+     .comment_div{width: 500px;}
+     .back{margin: 50px; margin-top: 50px;}
+
+
+    </style>
+
+</head>
+<body>
+
+
+<h1><%= @article.title %></h1>
+  <p>
+    Tags:
+    <% @article.tags.each do |tag| %>
+
+      <%= link_to tag.name, tag_path(:id => tag, :article_id => @article.id) %>
+    <% end %>
+  </p>
+
+<div><%= image_tag @article.photo.url(:small) %></div>
+<div><%= @article.body %></div>
+<% if user_signed_in?  && (@article.user_id == current_user.id)%>  
+    <h3><%= link_to "EDIT", edit_article_path(@article) %>|
+    <%= link_to "DELETE", article_path(@article),method: :delete,data: {confirm: "Really delete the article?"} %></h3></br>
+  <% elsif user_signed_in? && (current_user.role=="admin"||current_user.role =="superadmin")%>
+    <h3><%= link_to "DELETE", article_path(@article),method: :delete,data: {confirm: "Really delete the article?"} %></h3>
+<% end %>
+<% @article.attachments.each do |j| %>
+    <%= image_tag j.image(:thumb) %>
+    <% if user_signed_in?  && ((@article.user_id == current_user.id)||(current_user.role=="admin"||current_user.role =="superadmin"))%>
+      <%= link_to "<span class=\"glyphicon glyphicon-remove gly\"> </span>".html_safe, delete_attachment_path(:article_id=>@article.id,:id=>j.id), method: :delete,data: {confirm: "Really want to delete the attachment?"} %>
      <% end %>
-<%= render partial: 'comments/form' %>
-<%= link_to "<< Back", articles_path %>
+<% end %>
+
+<% if @article.comments.size == 0 %>
+       <h3>No Comments here</h3>
+<% else %>
+     <h3  id="comment_count">Comments (<%= @article.comments.size %>)</h3>
+<div class="comments">
+   <%= render partial: 'comment' %>
+</div>
+<% end %>
+<div class="cform">
+ <%= render partial: 'comments/form' %>
+ </div>
+
+<%= link_to "<< Back", articles_path, :class=>'back' %>
+</body>
+</html>
+
+
+
+
+
+
+<% end %>

@@ -1,9 +1,14 @@
 <h1>Listing all the Tags</h1>
 
-<ul>
+  <ol>
+
   <% @tags.each do |tag| %>
-    <%= tag.name %>&nbsp;&nbsp;&nbsp;
+
+    <li><h3><%= link_to tag.name, tag_path(:id=>tag.id,:tag=>1)%></h3></li>
+
+    <% if user_signed_in? && current_user.role == "superadmin" %>
     <%= link_to 'edit', edit_tag_path(tag)%>
     <%= link_to 'delete', tag_path(tag) ,method: :delete,data: {confirm: "Really want to delete the tag?"}%></br>
+    <% end %>
   <% end %>
-</ul>
+</ol>

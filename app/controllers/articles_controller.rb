@@ -1,7 +1,8 @@
 class ArticlesController < ApplicationController
 
 before_filter :authenticate_user!, except: [:new, :create, :index, :show]
-before_filter :autherise_user, only: [:edit,]
+before_filter :autherise_user, :only => [:edit]
+before_filter :check_active, :only => [:new, :edit]
 
 	def index
        @articles = Article.all
@@ -44,7 +45,7 @@ before_filter :autherise_user, only: [:edit,]
 		    end
         end
         if @article.save(article_params)	  		
-  		 flash.notice = "Your Article '#{@article.title}' Updated!"
+  		 flash.notice = " '#{@article.title}' Updated!"
 
   			redirect_to article_path(@article)
   		else
@@ -89,11 +90,21 @@ end
 	end
 	def autherise_user
 		@article =Article.find(params[:id])
+		
 	
 		unless current_user.role== "admin" || current_user.email== @article.user.email
    		redirect_to root_path
-   		end
+   	end
+   		
  	end
+ 	def check_active
+
+  unless (user_signed_in?) && (current_user.account_status ==true)
+  	flash.notice = "Sorry..!! you need to activate your account first."
+    redirect_to root_path
+  end
+    
+  end
 
 	def delete_attachment
 		@article= Article.find(params[:article_id])

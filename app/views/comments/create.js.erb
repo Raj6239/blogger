@@ -1,6 +1,6 @@
 $("#comment_count").html("comments(<%= (@article.comments.count)%>)");
  $(".comments").html("<%= escape_javascript(render(:partial => 'articles/comment')) %>");
-$(".cform").html("<%= escape_javascript(render(:partial => 'comments/form')) %>");
+ $(".cform").html("<%= escape_javascript(render(:partial => 'comments/form')) %>");
 $('#comment_body').val('');
 
 

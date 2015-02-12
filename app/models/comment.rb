@@ -5,5 +5,5 @@ class Comment < ActiveRecord::Base
 
 
 	#validates :author_name, :presence => { :message => "Author can't be blank" }
-	validates :body, :presence => { :message => "your comment can't be blank??" }
+	#validates :body, :presence => { :message => "your comment can't be blank??" }
 end

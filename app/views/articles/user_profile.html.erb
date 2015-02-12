@@ -27,6 +27,7 @@
 	<div class="col-md-3"><p><%= link_to 'Activate your Account', deactivate_account_path(@user.id)%></div>
 	<%end%>
 </div>
+
 <div class="row margin">
 	<div class="col-md-3"><h3>User ID:-</h3></div>
 	<div class="col-md-3"><%= @user.id%></div>
@@ -43,6 +44,6 @@
 	<h3><%= link_to 'Remove Account', delete_account_path(@user.id),method: :delete,data: {confirm: "Are you sure to remove your account"},:class=>'remove'%></h3>
 </div>
 
-<%= link_to "<< Back", articles_path %>
+<%= link_to " Back to articles list", articles_path, :class => 'new_article' %>
 </body>
 </html>

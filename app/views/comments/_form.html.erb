@@ -4,21 +4,11 @@
   <title></title>
   <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
    <script type="text/javascript">
-     $('#submit').on('click', function() {
-   // valid = true;   
-
-    if ($('#comment_body').val() == '') {
-        alert ("comment can't be blank!");
-       // valid = false;
-    }else if ( $('#comment_body').val() != ''){
-     alert ("comment is ready for submit.. !");
-    }
-    //return valid;
-});
+    
    </script>
 </head>
 <body>
-
+<% if (user_signed_in?) && (current_user.account_status ==true)%>
 <h3>Post comment here </h3>
 <%= form_for [ @article, @comment], remote: true , :id=>'new_comment' do |f| %>
   <% @comment.errors.full_messages.each do |error| %>
@@ -27,17 +17,17 @@
 
   <p>
     <%= f.label :body %><br/>
-    <%= f.text_area :body %>
+    <%= f.text_area :body , :required => true %>
   </p>
-     <% if user_signed_in? %>
+     <%# if user_signed_in? %>
        <%= f.hidden_field :user_id, :value => current_user.id %>
-     <% end%>
+     <%# end%>
 
   <p>
     <%= f.submit 'Submit',{:id=>'submit'} %>
   </p>
 <% end %>
-
+<% end%>
 
 </body>
 </html>

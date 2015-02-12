@@ -14,7 +14,7 @@ class Article < ActiveRecord::Base
 
 	has_attached_file :photo, :styles => { :small => "500x300#"},
 	:default_url => "android1.jpeg"
-	validates_attachment_content_type :photo, :content_type => ["image/jpg", "image/jpeg", "image/png"]
+	validates_attachment_content_type :photo, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
 
 
 	def tag_list
